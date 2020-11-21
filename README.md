@@ -25,3 +25,6 @@ Common example ```override-args``` include ```--multigpu=<gpu-ids seperated by c
 ```bash
 python main.py --config configs/resnet32-cifar100-pr0.1.yaml --multigpu 0 --data dataset/ --prune-rate 0.1 --lr 6e-3
 ```
+## Implementation
+1. The implementation of ProbMaskConv can be found at utils/conv_type.py ProbMaskConv.
+2. The implementation of Projection can be found at utils/net_utils.py, constrainScoreByWhole and solve_v_total.
