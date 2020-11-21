@@ -264,7 +264,7 @@ def parse_arguments():
 
     parser.add_argument(
         "--iterative",
-        default=False,
+        default=True,
         action="store_true",
         help="Whether use iterative pruning",
     )
