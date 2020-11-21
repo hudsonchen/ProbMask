@@ -332,12 +332,6 @@ def get_optimizer(args, model):
             )
         else:
             parameters = list(model.named_parameters())
-            for n, v in parameters:
-                if ("score" not in n) and v.requires_grad:
-                    print(n, "weight_para")
-            for n, v in parameters:
-                if ("score" in n) and v.requires_grad:
-                    print(n, "score_para")
             weight_params = [v for n, v in parameters if ("score" not in n) and v.requires_grad]
             score_params = [v for n, v in parameters if ("score" in n) and v.requires_grad]
             print(type(args.lr))
