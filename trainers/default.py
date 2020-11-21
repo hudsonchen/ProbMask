@@ -2,7 +2,7 @@ import torch
 import tqdm
 from utils.eval_utils import accuracy
 from utils.logging import AverageMeter, ProgressMeter
-from utils.net_utils import constrainScore, constrainScoreByWhole
+from utils.net_utils import constrainScoreByWhole
 from torch.utils.tensorboard import SummaryWriter
 writer = SummaryWriter()
 __all__ = ["train", "validate", "modifier"]
