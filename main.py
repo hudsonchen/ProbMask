@@ -39,7 +39,6 @@ def main():
 
 
 def main_worker(args):
-    print(type(args.lr), type(args.prune_rate))
     args.finetuning = False
     args.gpu = None
     train, validate, modifier = get_trainer(args)
@@ -335,7 +334,6 @@ def get_optimizer(args, model):
             parameters = list(model.named_parameters())
             weight_params = [v for n, v in parameters if ("score" not in n) and v.requires_grad]
             score_params = [v for n, v in parameters if ("score" in n) and v.requires_grad]
-            print(type(args.lr))
             optimizer1 = torch.optim.Adam(
                 score_params, lr=args.lr, weight_decay=args.weight_decay
             )
