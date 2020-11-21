@@ -8,7 +8,6 @@ name: probmask
 
 # ===== Learning Rate Policy ======== #
 optimizer: adam
-lr: 0.006
 lr_policy: cosine_lr
 
 # ===== Network training config ===== #
