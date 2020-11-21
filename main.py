@@ -39,6 +39,7 @@ def main():
 
 
 def main_worker(args):
+    print(type(args.lr), type(args.prune_rate))
     args.finetuning = False
     args.gpu = None
     train, validate, modifier = get_trainer(args)

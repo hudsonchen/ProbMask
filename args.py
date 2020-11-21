@@ -61,9 +61,7 @@ def parse_arguments():
         "--lr",
         default=0.1,
         type=float,
-        metavar="LR",
         help="initial learning rate",
-        dest="lr",
     )
     parser.add_argument(
         "--warmup_length", default=0, type=int, help="Number of warmup iterations"
