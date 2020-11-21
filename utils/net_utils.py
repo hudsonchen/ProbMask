@@ -93,7 +93,7 @@ def solve_v_total(model, total):
                 s += (m.scores - v).clamp(0, 1).sum()
         return s - k
     if f(0) < 0:
-        return 0, 0
+        return 0
     itr = 0
     while (1):
         itr += 1
