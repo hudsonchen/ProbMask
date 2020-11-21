@@ -115,6 +115,7 @@ def constrainScoreByWhole(model):
         if hasattr(m, "scores"):
             total += m.scores.nelement()
     v = solve_v_total(model, total)
+    print(v)
     for n, m in model.named_modules():
         if hasattr(m, "scores"):
             m.scores.sub_(v).clamp_(0, 1)

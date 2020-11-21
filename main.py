@@ -340,7 +340,7 @@ def get_optimizer(args, model):
                     print(n, "score_para")
             weight_params = [v for n, v in parameters if ("score" not in n) and v.requires_grad]
             score_params = [v for n, v in parameters if ("score" in n) and v.requires_grad]
-            print(args.lr)
+            print(type(args.lr))
             optimizer1 = torch.optim.Adam(
                 score_params, lr=args.lr, weight_decay=args.weight_decay
             )
