@@ -1,5 +1,7 @@
-#Effective Sparsification of Neural Networks with Global Sparsity Constraint
-##Requirements:
+# Effective Sparsification of Neural Networks with Global Sparsity Constraint
+
+## Requirements:
+
 ```
 Pytorch 1.4
 Python 3.7.7
