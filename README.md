@@ -18,10 +18,10 @@ tqdm 4.50.2
 3. Create a data directory as a base for all datasets, e.g., ./data/ in the code directory/
 ## Starting an Experiment 
 ```bash
-python main.py --config <path/to/config> <override-args>
+python main.py --config <path/to/config> <override-args> --lr 6e-3
 ```
 Common example ```override-args``` include ```--multigpu=<gpu-ids seperated by commas, no spaces>``` to run on GPUs, and ```--prune-rate``` to set the prune rate. Run ```python main --help``` for more details.
 ## Example Run
 ```bash
-python main.py --config configs/resnet32-cifar100-pr0.1.yaml --multigpu 0 --data dataset/ --prune-rate 0.1
+python main.py --config configs/resnet32-cifar100-pr0.1.yaml --multigpu 0 --data dataset/ --prune-rate 0.1 --lr 6e-3
 ```
