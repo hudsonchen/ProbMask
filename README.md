@@ -6,7 +6,6 @@
 Pytorch 1.4
 Python 3.7.7
 CUDA Version 10.1
-Tensorboard 2.0.0
 pyyaml 5.3.1
 tensorboard 2.2.1
 torchvision 0.5.0
