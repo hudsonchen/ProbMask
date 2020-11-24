@@ -25,6 +25,9 @@ from utils.schedulers import get_policy, assign_learning_rate
 
 from args import args
 import importlib
+import wandb
+
+wandb.init(project="name_random", name="name_random", config=args)
 
 import data
 import models
