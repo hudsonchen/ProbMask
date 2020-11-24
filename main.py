@@ -193,7 +193,7 @@ def main_worker(args):
             i = 0
             BESTACC1, BESTIDX = 0, 0
             BESTMODEL = None
-            while i < 5:
+            while i < 10:
                 i += 1
                 acc1, acc5, _ = validate(data.train_loader, model, criterion, args, None, epoch=args.start_epoch)
                 if acc1 > BESTACC1:
