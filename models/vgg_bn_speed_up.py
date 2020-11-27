@@ -55,9 +55,9 @@ class VGG19(nn.Module):
         x = self.bn1(x)
         print("x, after bn1", x.size())
         print("before select: ", self.bn1_w.size(), mask.size())
-        print("after select: ", torch.masked_select(self.bn1_w, mask).size())
-        masked_bn1_w = torch.masked_select(self.bn1_w, mask).view(mask.sum(), 1, 1, 1)
-        masked_bn1_b = torch.masked_select(self.bn1_b, mask).view(mask.sum(), 1, 1, 1)
+        print("after select: ", torch.masked_select(self.bn1_w, mask.squeeze()).size())
+        masked_bn1_w = torch.masked_select(self.bn1_w, mask.squeeze()).view(mask.sum(), 1, 1, 1)
+        masked_bn1_b = torch.masked_select(self.bn1_b, mask.squeeze()).view(mask.sum(), 1, 1, 1)
         x = x*masked_bn1_w+masked_bn1_b
         print("m_w, m_b, x", masked_bn1_w.size(), masked_bn1_b.size(), x.size())
         x = nn.ReLU(inplace=True)(x)
