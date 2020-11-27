@@ -13,7 +13,7 @@ class VGG(nn.Module):
 
     def forward(self, x):
         builder = get_builder()
-        temp_c = builder.conv3x3(3, 64)
+        temp_c = builder.conv3x3(3, 64).cuda()
         print("--1--")
         t1 = time.time()
         for i in range(100):
