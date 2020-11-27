@@ -63,6 +63,7 @@ class ProbMaskConvChannel(nn.Conv2d):
         else:
             nn.init.kaiming_uniform_(self.scores, a=math.sqrt(5))
 
+    @property
     def clamped_scores(self):
         return self.scores
 
@@ -102,6 +103,7 @@ class ProbMaskConvChannelDiscrete(nn.Conv2d):
         else:
             nn.init.kaiming_uniform_(self.scores, a=math.sqrt(5))
 
+    @property
     def clamped_scores(self):
         return self.scores
 
