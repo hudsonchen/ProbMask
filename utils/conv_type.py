@@ -148,7 +148,8 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
     def fix_subnet(self):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
 
-    def forward(self, x):
+    def forward(self, inputs):
+        x, mask = inputs
         if not self.train_weights:
             eps = 1e-20
             temp = parser_args.T
@@ -161,12 +162,15 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
             size.insert(0, self.subnet.sum())
             w = torch.masked_select(self.weight, self.subnet).view(size)
             print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
+            size = [w.size()[0], self.subnet.sum(), w.size()[2], w.size()[3]]
+            w = torch.masked_select(w, mask).view(size)
+            print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
             print("output:", x.size())
         else:
             w = self.weight * self.subnet
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
-        return x
+        return x, self.subnet
 
 
 class GetMaskDiscrete(autograd.Function):

@@ -1,5 +1,5 @@
 # Architecture
-arch: vgg19_bn_no_track
+arch: vgg19_bn_speed_up
 
 # ===== Dataset ===== #
 data: dataset/
