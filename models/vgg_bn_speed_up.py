@@ -49,12 +49,13 @@ class VGG19(nn.Module):
         self.linear = builder.conv1x1(512, num_classes)
 
     def forward(self, x):
-        # print("--1--")
+        print("--1--")
         t1 = time.time()
         for i in range(100):
-            x, mask = self.conv1(x)
+            y, mask = self.conv1(x)
         t2 = time.time()
         print(t2-t1)
+        # x, mask = self.conv1(x)
 
         # print("--2--")
         # print("x, mask", x.size(), mask.size())
