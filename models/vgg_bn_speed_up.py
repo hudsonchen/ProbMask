@@ -105,8 +105,9 @@ class VGG19(nn.Module):
         x, mask = self.conv16(x, mask)
         x = nn.ReLU(inplace=True)(self.bn16(x))
         x = nn.MaxPool2d(kernel_size=2, stride=2)(x)
-
+        print("before linear")
         x = self.linear(x)
+        print("after linear")
         return x.squeeze()
 
 def vgg19_bn_speed_up():
