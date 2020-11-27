@@ -49,8 +49,11 @@ class VGG19(nn.Module):
         self.linear = builder.conv1x1(512, num_classes)
 
     def forward(self, x):
+        builder = get_builder()
+        temp_c = builder.conv3x3(3, 6).cuda()
         print("--1--")
         t1 = time.time()
+        print("--1--")
         for i in range(100):
             y, mask = self.conv1(x)
         t2 = time.time()
