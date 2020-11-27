@@ -128,13 +128,16 @@ class ProbMaskConvChannelDiscrete(nn.Conv2d):
 
 
 class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
-    def __init__(self, prune=True, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.scores = nn.Parameter(torch.Tensor(self.weight.size()[0], 1, 1, 1))
         self.subnet = None
         self.train_weights = False
         self.rescaling_para = nn.Parameter(torch.Tensor(1))
-        self.prune = prune
+        if self.weight.size()[2] > 1:
+            self.prune = True
+        else:
+            self.prune = False
         if parser_args.score_init_constant is not None:
             self.scores.data = (
                     torch.ones_like(self.scores) * parser_args.score_init_constant
