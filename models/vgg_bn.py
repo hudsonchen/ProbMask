@@ -17,7 +17,7 @@ class VGG(nn.Module):
         print("--1--")
         t1 = time.time()
         for i in range(100):
-            y, mask = temp_c(x)
+            y = temp_c(x)
         t2 = time.time()
         print(t2 - t1)
 
