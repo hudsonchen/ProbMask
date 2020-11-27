@@ -53,7 +53,6 @@ class VGG19(nn.Module):
         temp_c = builder.conv3x3(3, 6).cuda()
         print("--1--")
         t1 = time.time()
-        print("--1--")
         for i in range(100):
             y, mask = temp_c(x)
         t2 = time.time()
