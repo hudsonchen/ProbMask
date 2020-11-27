@@ -45,7 +45,7 @@ class VGG19(nn.Module):
         self.conv16 = builder.conv3x3(512, 512)
         self.bn16 = nn.BatchNorm2d(512, track_running_stats=False, affine=False)
         num_classes = 10 if parser_args.set == "CIFAR10" else 100
-        self.linear = builder.conv1x1(512, num_classes)
+        self.linear = builder.conv1x1(False, 512, num_classes)
 
     def forward(self, x):
         print("--1--")

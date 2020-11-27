@@ -128,12 +128,13 @@ class ProbMaskConvChannelDiscrete(nn.Conv2d):
 
 
 class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, prune=True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.scores = nn.Parameter(torch.Tensor(self.weight.size()[0], 1, 1, 1))
         self.subnet = None
         self.train_weights = False
         self.rescaling_para = nn.Parameter(torch.Tensor(1))
+        self.prune = prune
         if parser_args.score_init_constant is not None:
             self.scores.data = (
                     torch.ones_like(self.scores) * parser_args.score_init_constant
@@ -155,17 +156,19 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
         else:
             x = inputs[0]
         if not self.train_weights:
-            eps = 1e-20
-            temp = parser_args.T
-            uniform0 = torch.rand_like(self.scores)
-            uniform1 = torch.rand_like(self.scores)
-            noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
-            self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
-            self.subnet = self.subnet.bool()
-            size = list(self.weight.size()[1:])
-            size.insert(0, self.subnet.sum())
-            w = torch.masked_select(self.weight, self.subnet).view(size)
-            print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
+            w = self.weight
+            if self.prune:
+                eps = 1e-20
+                temp = parser_args.T
+                uniform0 = torch.rand_like(self.scores)
+                uniform1 = torch.rand_like(self.scores)
+                noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
+                self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
+                self.subnet = self.subnet.bool()
+                size = list(self.weight.size()[1:])
+                size.insert(0, self.subnet.sum())
+                w = torch.masked_select(self.weight, self.subnet).view(size)
+                print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             if len(inputs) > 1:
                 size = [w.size()[0], mask.sum(), w.size()[2], w.size()[3]]
                 print("size of final w, size of input mask", size, mask.size())
