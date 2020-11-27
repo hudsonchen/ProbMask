@@ -17,7 +17,7 @@ class VGG(nn.Module):
         return x.squeeze()
 
 
-def make_layers(cfg, builder, batch_norm=False):
+def make_layers(cfg, builder, batch_norm=False, track_running_stats=True):
     layers = []
     in_channels = 3
     for v in cfg:
@@ -26,7 +26,7 @@ def make_layers(cfg, builder, batch_norm=False):
         else:
             conv2d = builder.conv3x3(in_channels, v)
             if batch_norm:
-                layers += [conv2d, nn.BatchNorm2d(v, eps=1e-5), nn.ReLU(inplace=True)]
+                layers += [conv2d, nn.BatchNorm2d(v, eps=1e-5, track_running_stats=track_running_stats), nn.ReLU(inplace=True)]
             else:
                 layers += [conv2d, nn.ReLU(inplace=True)]
             in_channels = v
@@ -43,6 +43,10 @@ cfgs = {
 
 def _vgg(cfg, batch_norm, builder):
     model = VGG(builder, make_layers(cfgs[cfg], builder, batch_norm=batch_norm))
+    return model
+
+def _vgg_no_track(cfg, batch_norm, builder, track_running_stats):
+    model = VGG(builder, make_layers(cfgs[cfg], builder, batch_norm=batch_norm, track_running_stats=track_running_stats))
     return model
 
 def vgg11_bn():
@@ -81,3 +85,13 @@ def vgg19_bn():
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     return _vgg('E', True, get_builder())
+
+
+def vgg19_bn_no_track():
+    r"""VGG 19-layer model (configuration 'E') with batch normalization
+    `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        progress (bool): If True, displays a progress bar of the download to stderr
+    """
+    return _vgg_no_track('E', True, get_builder(), False)
