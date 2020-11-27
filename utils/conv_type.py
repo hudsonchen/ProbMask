@@ -49,7 +49,7 @@ class ProbMaskConv(nn.Conv2d):
 
 
 
-class ProbMaskConvChannnel(nn.Conv2d):
+class ProbMaskConvChannel(nn.Conv2d):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.scores = nn.Parameter(torch.Tensor(self.weight.size()[0], 1, 1, 1))
@@ -88,7 +88,7 @@ class ProbMaskConvChannnel(nn.Conv2d):
         return x
 
 
-class ProbMaskConvChannnelDiscrete(nn.Conv2d):
+class ProbMaskConvChannelDiscrete(nn.Conv2d):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.scores = nn.Parameter(torch.Tensor(self.weight.size()[0], 1, 1, 1))

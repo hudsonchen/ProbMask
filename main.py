@@ -12,7 +12,6 @@ import torch.utils.data
 import torch.utils.data.distributed
 import copy
 import numpy as np
-from utils.conv_type import ProbMaskConv, ProbMaskConvChannnel, ProbMaskConvChannnelDiscrete
 from utils.logging import AverageMeter, ProgressMeter
 from utils.net_utils import (
     freeze_model_subnet,
