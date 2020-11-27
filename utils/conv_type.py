@@ -118,7 +118,7 @@ class ProbMaskConvChannelDiscrete(nn.Conv2d):
             uniform1 = torch.rand_like(self.scores)
             noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
             self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
-            print(self.subnet.size(), self.weight.size(), self.subnet)
+            # print(self.subnet.size(), self.weight.size(), self.subnet)
             w = self.weight * self.subnet
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
         else:
