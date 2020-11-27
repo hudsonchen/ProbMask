@@ -12,7 +12,7 @@ import torch.utils.data
 import torch.utils.data.distributed
 import copy
 import numpy as np
-from utils.conv_type import ProbMaskConv
+from utils.conv_type import ProbMaskConv, ProbMaskConvChannnel, ProbMaskConvChannnelDiscrete
 from utils.logging import AverageMeter, ProgressMeter
 from utils.net_utils import (
     freeze_model_subnet,
@@ -159,9 +159,9 @@ def main_worker(args):
         progress_overall.write_to_tensorboard(
             writer, prefix="diagnostics", global_step=epoch
         )
-        if args.conv_type == "ProbMaskConv":
+        if "ProbMaskConv" in args.conv_type:
             for n, m in model.named_modules():
-                if isinstance(m, ProbMaskConv) :
+                if hasattr(m, "scores"):
                     writer.add_scalar("pr/{}".format(n), m.clamped_scores.mean(), epoch)
                     print("average prune rate of this layer:", n, " ", m.clamped_scores.mean())
         writer.add_scalar("test/lr", cur_lr, epoch)

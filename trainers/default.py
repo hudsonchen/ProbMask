@@ -46,7 +46,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, writer, weight
             optimizer.step()
         if weight_opt is not None:
             weight_opt.step()
-        if args.conv_type == "ProbMaskConv":
+        if "ProbMaskConv" in args.conv_type:
             if not args.init_weights and not args.resume_train_weights and not args.finetuning:
                 with torch.no_grad():
                     constrainScoreByWhole(model)

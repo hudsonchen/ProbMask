@@ -63,6 +63,9 @@ class ProbMaskConvChannnel(nn.Conv2d):
         else:
             nn.init.kaiming_uniform_(self.scores, a=math.sqrt(5))
 
+    def clamped_scores(self):
+        return self.scores
+
     def fix_subnet(self):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
 
@@ -98,6 +101,9 @@ class ProbMaskConvChannnelDiscrete(nn.Conv2d):
             )
         else:
             nn.init.kaiming_uniform_(self.scores, a=math.sqrt(5))
+
+    def clamped_scores(self):
+        return self.scores
 
     def fix_subnet(self):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
