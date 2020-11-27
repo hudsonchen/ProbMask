@@ -106,7 +106,7 @@ class VGG19(nn.Module):
         x = nn.ReLU(inplace=True)(self.bn16(x))
         x = nn.MaxPool2d(kernel_size=2, stride=2)(x)
         print("before linear")
-        x = self.linear(x, mask)
+        x, mask = self.linear(x, mask)
         print("after linear")
         return x.squeeze()
 
