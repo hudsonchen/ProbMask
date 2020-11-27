@@ -32,26 +32,26 @@ def train(train_loader, model, criterion, optimizer, epoch, args, writer, weight
             weight_opt.zero_grad()
         for j in range(args.K):
             output = model(images)
-            loss = criterion(output, target) / args.K
-            loss.backward()
-            acc1, acc5 = accuracy(output, target, topk=(1, 5))
-            l = l + loss.item()
-            a1 = a1 + acc1.item() / args.K
-            a5 = a5 + acc5.item() / args.K
-        losses.update(l, images.size(0))
-        top1.update(a1, images.size(0))
-        top5.update(a5, images.size(0))
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 3)
-        if optimizer is not None:
-            optimizer.step()
-        if weight_opt is not None:
-            weight_opt.step()
-        if "ProbMaskConv" in args.conv_type:
-            if not args.init_weights and not args.resume_train_weights and not args.finetuning:
-                with torch.no_grad():
-                    constrainScoreByWhole(model)
-        if i % args.print_freq == 0:
-            progress.display(i)
+            # loss = criterion(output, target) / args.K
+            # loss.backward()
+            # acc1, acc5 = accuracy(output, target, topk=(1, 5))
+            # l = l + loss.item()
+            # a1 = a1 + acc1.item() / args.K
+            # a5 = a5 + acc5.item() / args.K
+        # losses.update(l, images.size(0))
+        # top1.update(a1, images.size(0))
+        # top5.update(a5, images.size(0))
+        # torch.nn.utils.clip_grad_norm_(model.parameters(), 3)
+        # if optimizer is not None:
+        #     optimizer.step()
+        # if weight_opt is not None:
+        #     weight_opt.step()
+        # if "ProbMaskConv" in args.conv_type:
+        #     if not args.init_weights and not args.resume_train_weights and not args.finetuning:
+        #         with torch.no_grad():
+        #             constrainScoreByWhole(model)
+        # if i % args.print_freq == 0:
+        #     progress.display(i)
     progress.display(len(train_loader))
     progress.write_to_tensorboard(writer, prefix="train", global_step=epoch)
     return top1.avg, top5.avg
