@@ -1,7 +1,7 @@
 import torch.nn as nn
 from utils.builder import get_builder
 from args import args as parser_args
-
+import time
 
 class VGG(nn.Module):
 
@@ -12,6 +12,17 @@ class VGG(nn.Module):
         self.linear = builder.conv1x1(512, num_classes)
 
     def forward(self, x):
+        builder = get_builder()
+        temp_c = builder.conv3x3(3, 64)
+        print("--1--")
+        t1 = time.time()
+        for i in range(100):
+            y, mask = temp_c(x)
+        t2 = time.time()
+        print(t2 - t1)
+
+
+
         x = self.features(x)
         x = self.linear(x)
         return x.squeeze()
