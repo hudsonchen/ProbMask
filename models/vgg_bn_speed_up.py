@@ -8,7 +8,7 @@ class VGG19(nn.Module):
     def __init__(self):
         super(VGG19, self).__init__()
         builder = get_builder()
-        self.conv1 = builder.conv3x3(True, 3, 64)
+        self.conv1 = builder.conv3x3(3, 64)
         self.bn1 = nn.BatchNorm2d(64, track_running_stats=False, affine=False)
         self.bn1_w = nn.Parameter(torch.Tensor(64))
         self.bn1_b = nn.Parameter(torch.Tensor(64))
