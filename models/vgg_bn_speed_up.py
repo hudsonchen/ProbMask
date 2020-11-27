@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 from utils.builder import get_builder
 from args import args as parser_args
-import timeit
+import time
 
 class VGG19(nn.Module):
 
@@ -50,8 +50,11 @@ class VGG19(nn.Module):
 
     def forward(self, x):
         # print("--1--")
-        # x, mask = self.conv1(x)
-        print(timeit.repeat(stmt="x, mask = self.conv1(x)", repeat=2, number=10000))
+        t1 = time.time()
+        for i in range(100):
+            x, mask = self.conv1(x)
+        t2 = time.time()
+        print(t2-t1)
 
         # print("--2--")
         # print("x, mask", x.size(), mask.size())
