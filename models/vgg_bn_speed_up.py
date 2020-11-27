@@ -58,8 +58,8 @@ class VGG19(nn.Module):
         print("after select: ", torch.masked_select(self.bn1_w, mask.squeeze()).size())
         masked_bn1_w = torch.masked_select(self.bn1_w, mask.squeeze()).view(mask.sum(), 1, 1, 1)
         masked_bn1_b = torch.masked_select(self.bn1_b, mask.squeeze()).view(mask.sum(), 1, 1, 1)
-        x = x*masked_bn1_w+masked_bn1_b
         print("m_w, m_b, x", masked_bn1_w.size(), masked_bn1_b.size(), x.size())
+        x = x*masked_bn1_w+masked_bn1_b
         x = nn.ReLU(inplace=True)(x)
         x, mask = self.conv2(x, mask)
         print("--3--")
