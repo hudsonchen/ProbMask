@@ -12,6 +12,8 @@ class VGG19(nn.Module):
         self.bn1 = nn.BatchNorm2d(64, track_running_stats=False, affine=False)
         self.bn1_w = nn.Parameter(torch.Tensor(64))
         self.bn1_b = nn.Parameter(torch.Tensor(64))
+        print("size b_w", self.bn1_w.size())
+        print("size b_b", self.bn1_b.size())
         self.conv2 = builder.conv3x3(64, 64)
         self.bn2 = nn.BatchNorm2d(64, track_running_stats=False, affine=False)
         self.conv3 = builder.conv3x3(64, 128)
@@ -49,7 +51,9 @@ class VGG19(nn.Module):
         print("--1--")
         x, mask = self.conv1(x)
         print("--2--")
+        print("x, mask", x.size(), mask.size())
         x = self.bn1(x)
+        print("x, after bn1", x.size())
         masked_bn1_w = torch.masked_select(self.bn1_w, mask).view(mask.sum(), 1, 1, 1)
         masked_bn1_b = torch.masked_select(self.bn1_w, mask).view(mask.sum(), 1, 1, 1)
         x = x*masked_bn1_w+masked_bn1_b
