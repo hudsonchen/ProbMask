@@ -123,7 +123,7 @@ def main_worker(args):
                                        weight_opt=weight_opt)
         train_time.update((time.time() - start_train) / 60)
         start_validation = time.time()
-        acc1, acc5, losses = validate(data.val_loader, model, criterion, args, writer, epoch)
+        # acc1, acc5, losses = validate(data.val_loader, model, criterion, args, writer, epoch)
         validation_time.update((time.time() - start_validation) / 60)
 
         # remember best acc@1 and save checkpoint
