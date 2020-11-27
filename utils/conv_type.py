@@ -168,8 +168,8 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
             print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             if len(inputs) > 1:
                 size = [w.size()[0], mask.sum(), w.size()[2], w.size()[3]]
-                print("size of final w, size of input mask", size, mask)
-                w = torch.masked_select(w, mask).view(size)
+                print("size of final w, size of input mask", size, mask.size())
+                w = torch.masked_select(w, mask.view(1, mask.nelement(), 1, 1)).view(size)
                 print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
             print("output:", x.size())
