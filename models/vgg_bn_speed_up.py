@@ -43,13 +43,21 @@ class VGG19(nn.Module):
         self.linear = builder.conv1x1(512, num_classes)
 
     def forward(self, x):
+        print("--1--")
         x, mask = self.conv1(x)
+        print("--2--")
+
+
         x = nn.ReLU(inplace=True)(self.bn1(x))
         x, mask = self.conv2(x, mask)
+        print("--3--")
+
         x = nn.ReLU(inplace=True)(self.bn2(x))
         x = nn.MaxPool2d(kernel_size=2, stride=2)(x)
 
         x, mask = self.conv3(x, mask)
+        print("--4--")
+
         x = nn.ReLU(inplace=True)(self.bn3(x))
         x, mask = self.conv4(x, mask)
         x = nn.ReLU(inplace=True)(self.bn4(x))

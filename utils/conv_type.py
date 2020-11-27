@@ -149,7 +149,7 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
 
     def forward(self, inputs):
-        print(inputs)
+        print(len(inputs))
         if len(inputs) > 1:
             x, mask = inputs
         else:
