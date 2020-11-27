@@ -55,7 +55,7 @@ class VGG19(nn.Module):
         t1 = time.time()
         print("--1--")
         for i in range(100):
-            y, mask = self.conv1(x)
+            y, mask = temp_c(x)
         t2 = time.time()
         print(t2-t1)
         # x, mask = self.conv1(x)
