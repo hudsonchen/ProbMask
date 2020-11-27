@@ -104,15 +104,12 @@ class ProbMaskConvChannnelDiscrete(nn.Conv2d):
 
     def forward(self, x):
         if not self.train_weights:
-            if not parser_args.discrete:
-                eps = 1e-20
-                temp = parser_args.T
-                uniform0 = torch.rand_like(self.scores)
-                uniform1 = torch.rand_like(self.scores)
-                noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
-                self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
-            else:
-                self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
+            eps = 1e-20
+            temp = parser_args.T
+            uniform0 = torch.rand_like(self.scores)
+            uniform1 = torch.rand_like(self.scores)
+            noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
+            self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
             w = self.weight * self.subnet
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
         else:
