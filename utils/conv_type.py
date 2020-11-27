@@ -148,12 +148,12 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
     def fix_subnet(self):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
 
-    def forward(self, inputs):
-        print(type(inputs))
+    def forward(self, *inputs):
+        print(type(inputs), len(inputs))
         if len(inputs) > 1:
             x, mask = inputs
         else:
-            x = inputs
+            x = inputs[0]
         if not self.train_weights:
             eps = 1e-20
             temp = parser_args.T
