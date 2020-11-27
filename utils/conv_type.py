@@ -153,7 +153,7 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
         self.subnet = (torch.rand_like(self.scores) < self.clamped_scores).float()
 
     def forward(self, *inputs):
-        print(type(inputs), len(inputs))
+        # print(type(inputs), len(inputs))
         if len(inputs) > 1:
             x, mask = inputs
         else:
@@ -171,14 +171,14 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
                 size = list(self.weight.size()[1:])
                 size.insert(0, self.subnet.sum())
                 w = torch.masked_select(self.weight, self.subnet).view(size)
-                print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
+                # print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             if len(inputs) > 1:
                 size = [w.size()[0], mask.sum(), w.size()[2], w.size()[3]]
-                print("size of final w, size of input mask", size, mask.size())
+                # print("size of final w, size of input mask", size, mask.size())
                 w = torch.masked_select(w, mask.view(1, mask.nelement(), 1, 1)).view(size)
-                print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
+                # print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
-            print("output:", x.size())
+            # print("output:", x.size())
         else:
             w = self.weight * self.subnet
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
