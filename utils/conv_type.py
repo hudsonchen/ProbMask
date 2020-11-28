@@ -171,9 +171,10 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
                     uniform1 = torch.rand_like(self.scores)
                     noise = -torch.log(torch.log(uniform0 + eps) / torch.log(uniform1 + eps) + eps)
                     self.subnet = GetMaskDiscrete.apply(torch.sigmoid((torch.log(self.clamped_scores + eps) - torch.log(1.0 - self.clamped_scores + eps) + noise) * temp))
-                    self.subnet = self.subnet.long()
+                    # self.subnet = self.subnet.long()
                     if self.subnet.sum() == 0:
                         self.subnet[0] = True
+                    print("self.subnet", self.subnet)
                     # size = list(self.weight.size()[1:])
                     # size.insert(0, self.subnet.sum())
                     # w = torch.masked_select(self.weight, self.subnet).view(size)
