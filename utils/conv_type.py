@@ -174,7 +174,7 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
                     self.subnet = self.subnet.bool()
                     if self.subnet.sum() == 0:
                         self.subnet[0] = True
-                    print("self.subnet", self.subnet)
+                    # print("self.subnet", self.subnet)
                     # size = list(self.weight.size()[1:])
                     # size.insert(0, self.subnet.sum())
                     # w = torch.masked_select(self.weight, self.subnet).view(size)
@@ -186,7 +186,7 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
                     # w = torch.masked_select(w, mask.view(1, mask.nelement(), 1, 1)).view(size)
                     w = w[:, mask.squeeze()]
                 self.temp_w = w
-                    # print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
+                    print("input:, weight:, self.weight.ori:", x.size(), w.size(), self.weight.size())
             else:
                 w = self.temp_w
             x = F.conv2d(x, w, self.bias, self.stride, self.padding, self.dilation, self.groups)
