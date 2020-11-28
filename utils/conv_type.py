@@ -161,7 +161,7 @@ class ProbMaskConvChannelDiscreteSpeedUp(nn.Conv2d):
         else:
             x = inputs[0]
         if not self.train_weights:
-            if self.count % 100 == 0:
+            if self.count % 1 == 0:
                 self.count += 1
                 w = self.weight
                 if self.prune:
