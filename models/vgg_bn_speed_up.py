@@ -49,7 +49,7 @@ class VGG19(nn.Module):
         self.linear = builder.conv1x1(512, num_classes)
 
     def forward(self, x):
-        x = torch.randn(256, 512, 3, 3)
+        x = torch.randn(256, 512, 3, 3).cuda()
         builder = get_builder()
         temp_c = builder.conv3x3(512, 512).cuda()
         print("--1--")
