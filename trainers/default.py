@@ -33,7 +33,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, writer, weight
         for j in range(args.K):
             output = model(images)
             loss = criterion(output, target) / args.K
-            loss.backward()
+            loss.backward(retain_graph=True)
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
             l = l + loss.item()
             a1 = a1 + acc1.item() / args.K
